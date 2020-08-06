@@ -64,9 +64,7 @@ def users():
                 return jsonify({"error": "Invalid form"})
         except:
             return jsonify({"error": "m"})
-                # return ({"error": "Invalid form"})
-    # except:
-    #         return ({"error": "Invalid form"})
+
 
 # @app.route("/")
 # def index():
