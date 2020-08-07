@@ -1,8 +1,10 @@
-// Login.jsx
 import React, { Component } from "react";
 import axios from "axios";
+import Alert from "./Alert";
 
 class Login extends Component {
+    state = { err: "" };
+
     login = (e) => {
         e.preventDefault();
         axios
@@ -11,7 +13,11 @@ class Login extends Component {
                 pwd: document.getElementById("password").value,
             })
             .then((res) => {
-                console.log(res.data);
+                if (res.data.error) {
+                    this.setState({ err: res.data.error });
+                } else {
+                    this.setState({ login: true });
+                }
             });
     };
 
@@ -22,12 +28,17 @@ class Login extends Component {
                     LOGIN
                 </div>
                 <div className="w3-container">
+                    {this.state.err.length > 0 && (
+                        <Alert
+                            message={`Check your form and try again! (${this.state.err})`}
+                        />
+                    )}
                     <form onSubmit={this.login}>
                         <p>
                             <label htmlFor="email">Email</label>
                             <input
                                 type="email"
-                                className="w3-input w3-border"
+                                class="w3-input w3-border"
                                 id="email"
                             />
                         </p>
@@ -35,7 +46,7 @@ class Login extends Component {
                             <label htmlFor="password">Password</label>
                             <input
                                 type="password"
-                                className="w3-input w3-border"
+                                class="w3-input w3-border"
                                 id="password"
                             />
                         </p>
@@ -43,6 +54,7 @@ class Login extends Component {
                             <button type="submit" class="w3-button w3-blue">
                                 Login
                             </button>
+                            {this.state.register && <p>You're logged in!</p>}
                         </p>
                     </form>
                 </div>
